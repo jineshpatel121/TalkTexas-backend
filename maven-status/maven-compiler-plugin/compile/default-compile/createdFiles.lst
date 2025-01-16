@@ -1,0 +1,7 @@
+com/TalkTexas/texasAPi/model/PersonDTO.class
+texasAPI/TexasAPI.class
+com/TalkTexas/texasAPi/TalkTexasApplication.class
+com/TalkTexas/texasAPi/model/Person.class
+com/TalkTexas/texasAPi/repository/PersonRepository.class
+com/TalkTexas/texasAPi/service/PeopleService.class
+com/TalkTexas/texasAPi/controller/PeopleController.class
