@@ -1,20 +1,35 @@
-# Use an official Maven image to build the application
-FROM maven:3.8.6-eclipse-temurin-17 AS build
+# Stage 1: Build the application
+FROM eclipse-temurin:17-jdk-jammy as builder
+
+# Set the working directory
 WORKDIR /app
+
+# Copy the Maven Wrapper and build files
+COPY mvnw .
+COPY .mvn .mvn
 COPY pom.xml .
-RUN mvn dependency:go-offline -B
+COPY src ./src
 
-# Copy the rest of the project files
-COPY . .
-RUN mvn clean package -DskipTests
+# Give execute permissions to the mvnw script
+RUN chmod +x mvnw
 
-# Use an official OpenJDK image to run the application
-FROM openjdk:17-jdk-slim
+# Build the application using Maven Wrapper
+RUN ./mvnw clean package -DskipTests
+
+# Stage 2: Run the application
+FROM eclipse-temurin:17-jre-jammy
+
+# Set the working directory
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
 
-# Expose the port the application runs on
+# Copy the built JAR file from the builder stage
+COPY --from=builder /app/target/texasAPi-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose the port your application will run on
 EXPOSE 8080
+
+# Set environment variables (optional, can be overridden by Render or Docker)
+ENV SPRING_PROFILES_ACTIVE=production
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
