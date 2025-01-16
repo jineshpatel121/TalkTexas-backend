@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://talk-texas.vercel.app") // Allow React frontend to access this API
+@CrossOrigin(origins = " ") // Allow React frontend to access this API
 @RestController
 public class PeopleController {
 
