@@ -4,13 +4,15 @@ FROM eclipse-temurin:17-jdk-jammy as builder
 # Set the working directory
 WORKDIR /app
 
-# Copy the Maven Wrapper and build files
+# Copy Maven Wrapper and necessary build files
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
+
+# Copy the source code
 COPY src ./src
 
-# Give execute permissions to the mvnw script
+# Give execute permissions to the Maven Wrapper
 RUN chmod +x mvnw
 
 # Build the application using Maven Wrapper
@@ -28,7 +30,7 @@ COPY --from=builder /app/target/texasAPi-0.0.1-SNAPSHOT.jar app.jar
 # Expose the port your application will run on
 EXPOSE 8080
 
-# Set environment variables (optional, can be overridden by Render or Docker)
+# Set environment variables (optional, can be overridden by Render)
 ENV SPRING_PROFILES_ACTIVE=production
 
 # Run the application
