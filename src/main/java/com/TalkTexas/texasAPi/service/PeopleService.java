@@ -23,7 +23,7 @@ public class PeopleService {
     @Autowired
     private PersonRepository personRepository;
 
-    private final String apiKey = "134294ae-a2a7-49c8-b3ea-b6f10f84c703";
+    private final String apiKey = " ";
     private final String urlString = "https://v3.openstates.org/people";
     private final RestTemplate restTemplate = new RestTemplate();
 
